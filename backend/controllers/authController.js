@@ -1,0 +1,5 @@
+import bcrypt from 'bcryptjs'; import jwt from 'jsonwebtoken'; import {users,id,safeUser} from '../data/store.js';
+const token=u=>jwt.sign(safeUser(u),process.env.JWT_SECRET||'campusride-demo-secret',{expiresIn:'7d'});
+export const login=async(req,res)=>{const {email,password}=req.body;const u=users.find(x=>x.email===email);if(!u||!await bcrypt.compare(password||'',u.password))return res.status(401).json({message:'Invalid email or password.'});res.json({token:token(u),user:safeUser(u)})};
+export const register=async(req,res)=>{const {name,email,password,phone,college}=req.body;if(!name||!email||!password||!phone||!college)return res.status(400).json({message:'Please complete all required fields.'});if(users.some(x=>x.email===email))return res.status(409).json({message:'An account already exists for this email.'});const u={id:id('u'),name,email,password:await bcrypt.hash(password,10),phone,college,rating:5,totalRides:0,ridesOffered:0,role:'student'};users.push(u);res.status(201).json({token:token(u),user:safeUser(u)})};
+export const me=(req,res)=>res.json({user:req.user});
