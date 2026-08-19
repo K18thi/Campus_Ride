@@ -18,41 +18,47 @@ pipeline {
 
         stage('Checkout') {
             steps {
+                echo 'Checking out CampusRide from GitHub'
                 checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
+                echo 'Installing root dependencies'
                 bat 'npm install'
+
+                echo 'Installing frontend dependencies'
                 bat 'cd frontend && npm install'
             }
         }
 
-        stage('Build') {
+        stage('Build Frontend') {
             steps {
-                bat 'npm run build'
+                echo 'Building CampusRide frontend'
+                bat 'cd frontend && npm run build'
             }
         }
 
-        stage('Deploy') {
+        stage('Backend Validation') {
             steps {
-                bat '''
-                if exist deployment rmdir /s /q deployment
-                mkdir deployment
-                xcopy dist deployment /E /I /Y
-                '''
+                echo 'Validating CampusRide backend'
+                bat 'node --check backend/server.js'
             }
         }
     }
 
     post {
         success {
-            echo 'Phase 1 CI/CD completed successfully!'
+            echo 'CampusRide CI pipeline completed successfully!'
         }
 
         failure {
-            echo 'Phase 1 CI/CD failed!'
+            echo 'CampusRide CI pipeline failed. Check the console output.'
+        }
+
+        always {
+            echo 'Jenkins pipeline execution finished.'
         }
     }
 }
