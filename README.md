@@ -14,6 +14,8 @@ CampusRide is a **full-stack campus ride-sharing project developed as an assignm
 ### 🏠 Dashboard
 ![CampusRide Dashboard](https://github.com/user-attachments/assets/7864b627-4596-47a2-a07a-19249efb54de)
 
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/e562c630-7cd9-452b-9f96-a834193d9dcd" />
+
 ### 🔎 Find Rides
 ![CampusRide Find Rides](https://github.com/user-attachments/assets/b721ac8f-f614-44ef-b9d7-3601a4f564bb)
 
