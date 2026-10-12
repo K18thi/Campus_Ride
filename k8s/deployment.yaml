@@ -1,0 +1,21 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campus-ride-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campus-ride-api
+  template:
+    metadata:
+      labels:
+        app: campus-ride-api
+    spec:
+      containers:
+        - name: api
+          image: campus_ride-main-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
